@@ -1,0 +1,25 @@
+<%include header %>
+<a href="/new-entry" class="btn btn-primary">Agregar victima</a>
+<br>
+<br>
+<br>
+<br>
+<% id(entries.length) {%>
+    <% entries.forEach((entry) =>{%>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="text-muted pull-right">
+            <%= entry.created %>
+        </div>
+        <%= entry.title %>
+    </div>
+    <div class="panel-body">
+        <%= entry.body %>
+    </div>
+</div>
+    <%
+    })%>
+    <%} else {%>
+        <p>no hay victimas</p>
+    <%}%>
+<%include footer %>
