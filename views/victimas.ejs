@@ -4,22 +4,22 @@
 <br>
 <br>
 <br>
-<% id(entries.length) {%>
-    <% entries.forEach((entry) =>{%>
+<% if(entries.length){ %>
+    <% entries.forEach((entry)=>{%>
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="text-muted pull-right">
-            <%= entry.created %>
+                <%= entry.created %>
+            </div>
+            <%= entry.title %> 
         </div>
-        <%= entry.title %>
+      <div class="panel-body">
+          <%= entry.body %>
+      </div>  
     </div>
-    <div class="panel-body">
-        <%= entry.body %>
-    </div>
-</div>
-    <%
-    })%>
-    <%} else {%>
-        <p>no hay victimas</p>
-    <%}%>
-<%include footer %>
+<%}) %>
+<% }else{ %>  
+   <a href="/new-entry">Nueva victima...</a>
+<%}%>
+
+<%include footer%>

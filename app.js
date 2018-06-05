@@ -9,9 +9,19 @@ var app= express();
 app.set("views",path.resolve(__dirname, "views"));
 app.set("view engine","ejs");
 
-var IP_DENEGADA = "::1";
-var publicPath = path.join(__dirname,'public');
+var IP_ELIMINADA = "::1";
+
+var publicPath =path.join(__dirname, 'files/public');
 app.use('/recursos',express.static(publicPath));
+
+var entries=[];
+app.locals.entries = entries;
+
+app.use(logger('dev'));
+app.use(bodyParse.urlencoded({extended:false}));
+
+
+
 
 app.get('/',(request, response) => {
     response.render("header");
@@ -29,6 +39,9 @@ app.get('/armas.ejs',(request, response)=>{
 app.get('/Victimas.ejs',(request, response)=>{
     response.render("victimas");
 });
+app.get("/new-entry",(request,response) => {
+response.render("new-entry");
+});
 
 app.use((request,response)=>{
     response.writeHead(404,{"Content-type":"text/html"});
@@ -36,13 +49,6 @@ app.use((request,response)=>{
     
 });
 
-var entries=[];
-app.locals.entries = entries;
-
-app.use(logger("dev"));
-app.use(bodyParse.urlencoded({extended:false}));
-
-app.get("/",(request,response) => response.render("new-entry"));
 
 app.post('/new-entry',(request,response) => {
     if(!request.body.title || !request.body.body){
@@ -57,6 +63,6 @@ app.post('/new-entry',(request,response) => {
     response,redirect("/");
 });
 
-
+app.use((request, response)=> response.status(404).render('404'));
 http.createServer(app).listen(3000);
 
